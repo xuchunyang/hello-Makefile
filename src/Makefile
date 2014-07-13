@@ -1,13 +1,22 @@
+TARGET = program
+LIBS = -lm
+CC = gcc
+CFLAGS = -g -Wall
+
+.PHONY: default all clean
+
+default: $(TARGET)
+all: default
+
+OBJECTS = program.o
 HEADERS = program.h headers.h
 
-default: program
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-program.o: program.c $(HEADERS)
-	gcc -c program.c -o program.o
-
-program: program.o
-	gcc program.o -o program
+program: $(OBJECTS)
+	gcc $(OBJECTS) -o $@
 
 clean:
-	-rm -f program.o
+	-rm -f $(OBJECTS)
 	-rm -f program
